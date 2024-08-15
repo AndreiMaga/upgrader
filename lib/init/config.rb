@@ -1,0 +1,15 @@
+# frozen_string_literal: true
+
+require 'yaml'
+
+module Config
+  module_function
+
+  def config
+    @config ||= YAML.load_file(File.join('config', 'config.yml'), symbolize_names: true, aliases: true) || {}
+  end
+
+  def projects
+    @projects ||= config.fetch(:projects, [])
+  end
+end
