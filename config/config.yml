@@ -1,7 +1,7 @@
 .projects_defaults: &projects_defaults
   autointerface:
     path: '/Users/andrei.maga/Desktop/Dev/apps/autointerface'
-    steps: ['git:create', 'bundle:update']
+    steps: ['git:create','bundle:update','rspec', 'git:commit']
 
 projects:
     <<: *projects_defaults

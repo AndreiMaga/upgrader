@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-require 'open3'
 module Upgrader
   module Modules
     class BundleModule < BaseModule
       def update
-        ::CLI::UI::Frame.open("bundle update (#{@project.name})") do |_frame|
+        frame_with_rescue('bundle update') do
           store_gems(:before)
           wait('Updating gems') { update_gems }
           store_gems(:after)
@@ -41,6 +40,9 @@ module Upgrader
 
       def show_changes
         HashDiff.new(gems[:before], gems[:after]).print
+
+        changes = ::CLI::UI.ask('Continue? [y/n]')
+        exit!(1) if changes.downcase == 'n'
       end
     end
 
