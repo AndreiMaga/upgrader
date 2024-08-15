@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative './module'
-require_relative './gitmodule'
-require_relative './bundlemodule'
+require_relative './base'
+require_relative './git'
+require_relative './bundle'
 
 module Upgrader
   module Modules

@@ -5,13 +5,12 @@ module Upgrader
   module Modules
     class BundleModule < BaseModule
       def update
-        ::CLI::UI::Frame.open('bundle update') do |_frame|
+        ::CLI::UI::Frame.open("bundle update (#{@project.name})") do |_frame|
           store_gems(:before)
-          update_gems
-          # wait('Updating gems') { update_gems }
+          wait('Updating gems') { update_gems }
           store_gems(:after)
           changes = ::CLI::UI.ask('Show changes? [y/n]')
-          show_changes if changes == 'y'
+          show_changes if changes.downcase == 'y'
         end
       end
 
@@ -52,12 +51,12 @@ module Upgrader
       end
 
       def sign(key)
-        if @before[key].nil?
+        if @before[key] == @after[key]
+          nil
+        elsif @before[key].nil?
           '{{green:+}}'
         elsif @after[key].nil?
           '{{red:-}}'
-        elsif @before[key] == @after[key]
-          nil
         else
           '{{yellow:~}}'
         end
@@ -66,7 +65,7 @@ module Upgrader
       def print
         ::CLI::UI.puts ''
         diff.each do |key, values|
-          puts ::CLI::UI.fmt "#{values[:changes]} #{key}: #{values[:before]} -> #{values[:after]}"
+          ::CLI::UI.puts ::CLI::UI.fmt "#{values[:changes]} #{key}: #{values[:before]} -> #{values[:after]}"
         end
       end
 

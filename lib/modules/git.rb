@@ -1,16 +1,24 @@
 # frozen_string_literal: true
 
 require 'git'
+
 module Upgrader
   module Modules
     class GitModule < BaseModule
-      def git
-        @git ||= Git.open(@project.path)
-      end
-
       def create
         wait('Checking out main') { checkout_main }
         wait('Creating branch and changelog') { create_branch_and_changelog }
+      end
+
+      def commit
+        git.add(all: true)
+        git.commit('Upgrade ruby dependencies')
+      end
+
+      private
+
+      def git
+        @git ||= Git.open(@project.path)
       end
 
       def checkout_main
