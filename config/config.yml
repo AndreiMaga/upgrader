@@ -1,7 +1,7 @@
 projects:
   autointerface:
     path: '/Users/andrei.maga/Desktop/Dev/apps/autointerface'
-    steps: ['bundle:update']
+    steps: ['git:create','changelog','bundle:update', 'rspec']
     behaviours:
       changelog:
         title: 'Update ruby'

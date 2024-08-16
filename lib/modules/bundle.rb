@@ -6,8 +6,7 @@ module Upgrader
       def update
         frame_with_rescue('bundle update') do
           store_gems(:before)
-          # wait('Updating gems') { update_gems }
-          update_gems
+          wait('Updating gems') { update_gems }
           store_gems(:after)
           changes if @project.behaviours(:bundle, :skip_changes) == false
         end
