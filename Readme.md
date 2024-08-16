@@ -1,3 +1,28 @@
+- [Concepts](#concepts)
+- [Usage](#usage)
+- [Modules](#modules)
+  - [Git](#git)
+    - [Steps](#steps)
+      - [*`git:create`*](#gitcreate)
+      - [*`git:commit`*](#gitcommit)
+    - [Behaviours](#behaviours)
+      - [*`branch_prefix`*](#branch_prefix)
+  - [Bundle](#bundle)
+    - [Steps](#steps-1)
+      - [*`bundle:update`*](#bundleupdate)
+    - [Behaviours](#behaviours-1)
+      - [*`skip_changes`*](#skip_changes)
+  - [Changelog](#changelog)
+    - [Steps](#steps-2)
+      - [*`changelog`*](#changelog-1)
+    - [Behaviours](#behaviours-2)
+      - [*`title`*](#title)
+  - [RSpec](#rspec)
+    - [Steps](#steps-3)
+      - [*`rspec`*](#rspec-1)
+
+
+
 # Concepts
 
 *Modules* are self contained pieces of code, they can be modified by behaviors and they expose 'steps'.  
