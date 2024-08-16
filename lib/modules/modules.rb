@@ -5,6 +5,7 @@ require_relative './git'
 require_relative './bundle'
 require_relative './rspec'
 require_relative './changelog'
+require_relative './gitlab'
 
 module Upgrader
   module Modules
@@ -12,7 +13,8 @@ module Upgrader
       'git' => GitModule,
       'bundle' => BundleModule,
       'rspec' => RSpecModule,
-      'changelog' => ChangelogModule
+      'changelog' => ChangelogModule,
+      'gitlab' => GitLabModule
     }.freeze
   end
 end

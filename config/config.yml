@@ -11,17 +11,17 @@
 
 projects:
   autointerface:
-    path: '/Users/andrei.maga/Desktop/Dev/apps/autointerface' 
-    steps: ['git:create','changelog','bundle:update', 'rspec']
+    path: "/Users/andrei.maga/Desktop/Dev/apps/autointerface"
+    steps: ["git:create','changelog','bundle:update', 'rspec"]
     behaviours:
       changelog:
-        title: 'Update ruby dependencies'
+        title: "Update ruby dependencies"
 
 behaviours: # this will apply to all of the projects
   changelog:
-    title: 'Upgrade ruby dependencies'
+    title: "Upgrade ruby dependencies"
   git:
-    branch_prefix: 'upgrade_ruby_dependencies'
-    message: 'Upgrade ruby dependencies'
+    branch_prefix: "upgrade_ruby_dependencies_test_auto_upgrader"
+    message: "Upgrade ruby dependencies"
   bundle:
     skip_changes: true

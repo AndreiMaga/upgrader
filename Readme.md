@@ -20,6 +20,9 @@
   - [RSpec](#rspec)
     - [Steps](#steps-3)
       - [*`rspec`*](#rspec-1)
+  - [Gitlab](#gitlab)
+    - [Steps](#steps-4)
+      - [*`mr`*](#mr)
 
 
 
@@ -91,3 +94,10 @@ Use this to change the changelog title
 
 #### *`rspec`*
 Will run `rspec` and if it fails, it will stop the execution.
+
+## Gitlab
+
+### Steps
+
+#### *`mr`*
+Will push the branch and will open a webpage to create the MR
