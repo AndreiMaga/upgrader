@@ -11,3 +11,4 @@ behaviours:
     title: 'Upgrade ruby dependencies'
   git:
     branch_prefix: 'upgrade_ruby_dependencies'
+    message: 'Upgrade ruby dependencies'

@@ -14,12 +14,12 @@ module Upgrader
 
       def create_changelog
         File.open(File.join(@project.path, 'changelogs', 'unreleased', "#{branch_name}.yml"), 'w') do |file|
-          file.write("---\ntitle: #{changelog[:title]}\n")
+          file.write("---\ntitle: #{changelog}\n")
         end
       end
 
       def changelog
-        @project.behaviours(:changelog)
+        @project.behaviours(:changelog, :title)
       end
     end
   end

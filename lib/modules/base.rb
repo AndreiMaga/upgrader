@@ -15,7 +15,7 @@ module Upgrader
       private
 
       def branch_name
-        @branch_name ||= "#{Time.now.strftime('%Y%m%d')}_#{@project.behaviours(:git)[:branch_prefix]}"
+        @branch_name ||= "#{Time.now.strftime('%Y%m%d')}_#{@project.behaviours(:git, :branch_prefix)}"
       end
     end
   end

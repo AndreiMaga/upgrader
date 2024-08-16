@@ -17,11 +17,12 @@ module Upgrader
       @steps.each { |step| run_step(step) }
     end
 
-    def behaviours(key)
-      result = @behaviour.fetch(key, nil) || Config.behaviours.fetch(key, nil)
-      raise "No behaviour found for #{key}" unless result
+    def behaviours(mod, key)
+      result = @behaviour.fetch(mod, nil) || Config.behaviours.fetch(mod, nil)
+      raise "No behaviour found for #{mod}" unless result
+      raise "No key found for #{mod}" unless result.key?(key)
 
-      result
+      result[key]
     end
 
     private

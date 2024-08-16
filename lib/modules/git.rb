@@ -26,7 +26,7 @@ module Upgrader
 
       def commit_all
         git.add(all: true)
-        git.commit('Upgrade ruby dependencies')
+        git.commit(@project.behaviours(:git, :message))
       end
 
       def checkout_main
