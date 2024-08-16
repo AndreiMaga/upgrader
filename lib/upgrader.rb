@@ -14,8 +14,8 @@ module Upgrader
       end
 
       @projects.each do |name, opts|
-        frame_with_rescue("Upgrading #{name}") do |frame|
-          Project.new(name:, opts:, frame:).upgrade
+        frame_with_rescue("Upgrading #{name}") do |_frame|
+          Project.new(name:, opts:).upgrade
         end
       end
     end

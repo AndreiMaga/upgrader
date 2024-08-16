@@ -1,7 +1,13 @@
-.projects_defaults: &projects_defaults
+projects:
   autointerface:
     path: '/Users/andrei.maga/Desktop/Dev/apps/autointerface'
-    steps: ['git:create','bundle:update','rspec', 'git:commit']
+    steps: ['git:create','changelog','bundle:update','rspec']
+    behaviours:
+      changelog:
+        title: 'Update ruby'
 
-projects:
-    <<: *projects_defaults
+behaviours:
+  changelog:
+    title: 'Upgrade ruby dependencies'
+  git:
+    branch_prefix: 'upgrade_ruby_dependencies'

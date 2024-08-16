@@ -12,4 +12,8 @@ module Config
   def projects
     @projects ||= config.fetch(:projects, [])
   end
+
+  def behaviours
+    @behaviours ||= config.fetch(:behaviours, {})
+  end
 end

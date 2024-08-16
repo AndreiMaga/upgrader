@@ -2,19 +2,26 @@
 
 module Upgrader
   class Project
-    attr_reader :name, :path, :frame
+    attr_reader :name, :path
 
-    def initialize(name:, opts:, frame:)
+    def initialize(name:, opts:)
       @name = name
       @path = opts[:path]
       @steps = opts[:steps] || []
-      @frame = frame
+      @behaviour = opts[:behaviours] || {}
     end
 
     def upgrade
       raise 'No steps provided' if @steps.empty?
 
       @steps.each { |step| run_step(step) }
+    end
+
+    def behaviours(key)
+      result = @behaviour.fetch(key, nil) || Config.behaviours.fetch(key, nil)
+      raise "No behaviour found for #{key}" unless result
+
+      result
     end
 
     private
