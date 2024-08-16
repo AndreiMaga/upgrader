@@ -3,6 +3,8 @@
 module Upgrader
   module Modules
     class RSpecModule < BaseModule
+      Upgrader::Modules.register_module('rspec', self)
+
       def run
         frame_with_rescue('Running RSpec') do
           wait('Running RSpec') { run_rspec }

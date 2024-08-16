@@ -3,6 +3,8 @@
 module Upgrader
   module Modules
     class BundleModule < BaseModule
+      Upgrader::Modules.register_module('bundle', self)
+
       def update
         frame_with_rescue('bundle update') do
           store_gems(:before)

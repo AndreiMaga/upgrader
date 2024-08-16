@@ -30,7 +30,7 @@ module Upgrader
     def run_step(step)
       mod, fn = step.split(':')
 
-      module_class = ::Upgrader::Modules::MODULES[mod]
+      module_class = ::Upgrader::Modules.modules[mod]
 
       raise "Unknown module: #{mod}" unless module_class
 

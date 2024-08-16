@@ -3,6 +3,8 @@
 module Upgrader
   module Modules
     class ChangelogModule < BaseModule
+      Upgrader::Modules.register_module('changelog', self)
+
       def run
         frame_with_rescue('Creating changelog') do
           wait('Creating changelog') { create_changelog }

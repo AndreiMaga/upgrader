@@ -5,6 +5,8 @@ require 'git'
 module Upgrader
   module Modules
     class GitModule < BaseModule
+      Upgrader::Modules.register_module('git', self)
+
       def create
         frame_with_rescue('Creating git branch') do
           wait('Checking out main') { checkout_main }

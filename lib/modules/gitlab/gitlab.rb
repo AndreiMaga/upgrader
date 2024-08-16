@@ -6,6 +6,8 @@ require 'launchy'
 module Upgrader
   module Modules
     class GitLabModule < BaseModule
+      Upgrader::Modules.register_module('gitlab', self)
+
       def mr
         frame_with_rescue('Creating merge request') do
           wait('Pushing branch') { push_branch }
