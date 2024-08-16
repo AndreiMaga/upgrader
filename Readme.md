@@ -41,6 +41,12 @@ The branch is computed like this `<timestamp>_<branch_prefix>`
 #### *`bundle:update`*
 Runs `bundle update` and allows to see the changes to dependencies
 
+### Behaviours
+
+#### *`skip_changes`*
+
+Set to true if you don't want to see the changes
+
 ## Changelog
 
 ### Available steps

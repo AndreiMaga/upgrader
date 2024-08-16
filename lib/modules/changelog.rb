@@ -5,8 +5,7 @@ module Upgrader
     class ChangelogModule < BaseModule
       def run
         frame_with_rescue('Creating changelog') do
-          create_changelog
-          # wait('Creating changelog') { create_changelog }
+          wait('Creating changelog') { create_changelog }
         end
       end
 

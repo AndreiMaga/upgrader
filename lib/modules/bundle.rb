@@ -6,14 +6,18 @@ module Upgrader
       def update
         frame_with_rescue('bundle update') do
           store_gems(:before)
-          wait('Updating gems') { update_gems }
+          # wait('Updating gems') { update_gems }
+          update_gems
           store_gems(:after)
-          changes = ::CLI::UI.ask('Show changes? [y/n]')
-          show_changes if changes.downcase == 'y'
+          changes if @project.behaviours(:bundle, :skip_changes) == false
         end
       end
 
       private
+
+      def changes
+        show_changes if ::CLI::UI.ask('Show changes? [y/n]') == 'y'
+      end
 
       def update_gems
         Bundler.with_original_env do
