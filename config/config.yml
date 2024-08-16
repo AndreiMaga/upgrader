@@ -1,12 +1,23 @@
+#
+# Project structure
+#   <project name>:
+#     path: string -> local path to the repository
+#     steps: array of strings -> steps in the order you want them to run in
+#     behaviours: -> this will only apply to this project, and will override the default ones
+#       <behaviour>: -> the name of the behaviour you want to override
+#         <key>:  -> the key on the behaviour that you want to override
+#
+
+
 projects:
   autointerface:
-    path: '/Users/andrei.maga/Desktop/Dev/apps/autointerface'
+    path: '/Users/andrei.maga/Desktop/Dev/apps/autointerface' 
     steps: ['git:create','changelog','bundle:update', 'rspec']
     behaviours:
       changelog:
-        title: 'Update ruby'
+        title: 'Update ruby dependencies'
 
-behaviours:
+behaviours: # this will apply to all of the projects
   changelog:
     title: 'Upgrade ruby dependencies'
   git:
