@@ -15,7 +15,7 @@ bundle exec ruby lib/upgrader.rb
 
 ## Git
 
-### Available steps
+### Steps
 
 #### *`git:create`*
 - checkout main
@@ -36,10 +36,10 @@ The branch is computed like this `<timestamp>_<branch_prefix>`
 
 ## Bundle
 
-### Available steps
+### Steps
 
 #### *`bundle:update`*
-Runs `bundle update` and allows to see the changes to dependencies
+Runs `bundle update` and can show you the differences in the lockfile.
 
 ### Behaviours
 
@@ -49,10 +49,10 @@ Set to true if you don't want to see the changes
 
 ## Changelog
 
-### Available steps
+### Steps
 
 #### *`changelog`*
-Will add a changelog file to the `changelog/unreleased` folder, with the contents
+Will add a changelog file to the `changelog/unreleased` folder, with the contents.
 
 
 ### Behaviours
@@ -62,7 +62,7 @@ Use this to change the changelog title
 
 ## RSpec
 
-### Available steps
+### Steps
 
 #### *`rspec`*
-Will run `rspec` and if it fails, it will stop the execution of the steps
+Will run `rspec` and if it fails, it will stop the execution.
