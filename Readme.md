@@ -14,7 +14,7 @@
       - [*`title`*](#title)
   - [Gitlab](#gitlab)
     - [Steps](#steps-2)
-      - [*`mr`*](#mr)
+      - [*`gitlab:mr`*](#gitlabmr)
   - [Bundle](#bundle)
     - [Steps](#steps-3)
       - [*`bundle:update`*](#bundleupdate)
@@ -78,7 +78,7 @@ Use this to change the changelog title
 
 ### Steps
 
-#### *`mr`*
+#### *`gitlab:mr`*
 Will push the branch and will open a webpage to create the MR
 
 ## Bundle
