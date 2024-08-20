@@ -7,22 +7,22 @@
       - [*`git:commit`*](#gitcommit)
     - [Behaviours](#behaviours)
       - [*`branch_prefix`*](#branch_prefix)
-  - [Bundle](#bundle)
-    - [Steps](#steps-1)
-      - [*`bundle:update`*](#bundleupdate)
-    - [Behaviours](#behaviours-1)
-      - [*`skip_changes`*](#skip_changes)
   - [Changelog](#changelog)
-    - [Steps](#steps-2)
+    - [Steps](#steps-1)
       - [*`changelog`*](#changelog-1)
-    - [Behaviours](#behaviours-2)
+    - [Behaviours](#behaviours-1)
       - [*`title`*](#title)
-  - [RSpec](#rspec)
-    - [Steps](#steps-3)
-      - [*`rspec`*](#rspec-1)
   - [Gitlab](#gitlab)
-    - [Steps](#steps-4)
+    - [Steps](#steps-2)
       - [*`mr`*](#mr)
+  - [Bundle](#bundle)
+    - [Steps](#steps-3)
+      - [*`bundle:update`*](#bundleupdate)
+    - [Behaviours](#behaviours-2)
+      - [*`skip_changes`*](#skip_changes)
+  - [RSpec](#rspec)
+    - [Steps](#steps-4)
+      - [*`rspec`*](#rspec-1)
 
 
 
@@ -59,21 +59,7 @@ bundle exec ruby lib/upgrader.rb
 
 #### *`branch_prefix`*
 
-The branch is computed like this `<timestamp>_<branch_prefix>`
-
-
-## Bundle
-
-### Steps
-
-#### *`bundle:update`*
-Runs `bundle update` and can show you the differences in the lockfile.
-
-### Behaviours
-
-#### *`skip_changes`*
-
-Set to true if you don't want to see the changes
+The branch name is created like this `<timestamp>_<branch_prefix>`
 
 ## Changelog
 
@@ -88,16 +74,29 @@ Will add a changelog file to the `changelog/unreleased` folder, with the content
 #### *`title`*
 Use this to change the changelog title
 
-## RSpec
-
-### Steps
-
-#### *`rspec`*
-Will run `rspec` and if it fails, it will stop the execution.
-
 ## Gitlab
 
 ### Steps
 
 #### *`mr`*
 Will push the branch and will open a webpage to create the MR
+
+## Bundle
+
+### Steps
+
+#### *`bundle:update`*
+Runs `bundle update` and can show you the differences in the lockfile.
+
+### Behaviours
+
+#### *`skip_changes`*
+
+Set to true if you don't want to see the changes
+
+## RSpec
+
+### Steps
+
+#### *`rspec`*
+Will run `rspec` and if it fails, it will stop the execution.
