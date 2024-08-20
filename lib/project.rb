@@ -18,7 +18,8 @@ module Upgrader
     end
 
     def behaviours(mod, key)
-      result = @behaviour.fetch(mod, nil) || Config.behaviours.fetch(mod, nil)
+      result = @behaviour.fetch(mod, nil)
+      result = Config.behaviours.fetch(mod, nil) unless result&.key?(key)
       raise "No behaviour found for #{mod}" unless result
       raise "No key found for #{key}" unless result.key?(key)
 
