@@ -8,11 +8,10 @@
 #         <key>:  -> the key on the behaviour that you want to override
 #
 
-
 projects:
   autointerface:
     path: "/Users/andrei.maga/Desktop/Dev/apps/autointerface"
-    steps: ['git:create','changelog','bundle:update', 'rspec']
+    steps: ['git:create','changelog', 'ruby-version', 'bundle:update', 'rspec']
     behaviours:
       changelog:
         title: "Update ruby dependencies"
@@ -28,3 +27,7 @@ behaviours: # this will apply to all of the projects
 
 misc:
   skip_version_check: false
+
+languages:
+  ruby:
+    manager: "rbenv"

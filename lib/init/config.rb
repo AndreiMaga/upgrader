@@ -20,4 +20,8 @@ module Config
   def misc
     @misc ||= config.fetch(:misc, {})
   end
+
+  def languages
+    @languages ||= config.fetch(:languages, {})
+  end
 end

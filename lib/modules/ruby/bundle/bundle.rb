@@ -14,10 +14,22 @@ module Upgrader
         end
       end
 
+      def install
+        frame_with_rescue('bundle install') do
+          wait('Installing gems') { install_gems }
+        end
+      end
+
       private
 
+      def install_gems
+        Bundler.with_original_env do
+          Dir.chdir(@project.path) { `bundle install` }
+        end
+      end
+
       def changes
-        show_changes if ::CLI::UI.ask('Show changes? [y/n]') == 'y'
+        show_changes if ::CLI::UI::Prompt.confirm('Show changes?')
       end
 
       def update_gems
@@ -46,8 +58,7 @@ module Upgrader
       def show_changes
         HashDiff.new(gems[:before], gems[:after]).print
 
-        changes = ::CLI::UI.ask('Continue? [y/n]')
-        exit!(1) if changes.downcase == 'n'
+        exit!(1) unless ::CLI::UI::Prompt.confirm('Continue?')
       end
     end
 
