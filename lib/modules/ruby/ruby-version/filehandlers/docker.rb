@@ -1,22 +1,12 @@
 # frozen_string_literal: true
 
-require 'English'
-
 module Upgrader
   module Modules
     module Ruby
       module FileHandlers
-        class Docker
-          include CLI
-          ::Upgrader::Modules::Ruby::FileHandlers.register_file_handler('docker', self)
-
+        class Docker < BaseFileHandler
           FILENAME = 'Dockerfile'
           PATTERN  = /^FROM ruby:([\d.]{1,5})/
-
-          def initialize(project, new_version)
-            @project = project
-            @new_version = new_version
-          end
 
           def run
             paths = file_paths
@@ -35,19 +25,9 @@ module Upgrader
 
           private
 
-          def file_paths
-            Dir["#{@project.path}/**/#{FILENAME}"]
-          end
-
           def update_file!(path)
             new_content = content(path).gsub(/(^FROM ruby:)([\d.]{1,5})/, "\\1#{@new_version}")
-            file = File.open(path, 'w')
-            file.puts new_content
-            file.close
-          end
-
-          def content(path)
-            File.read(path)
+            save_content(path, new_content)
           end
         end
       end
