@@ -21,7 +21,10 @@ behaviours: # this will apply to all of the projects
   changelog:
     title: "Upgrade ruby dependencies"
   git:
-    branch_prefix: "upgrade_ruby_dependencies_test_auto_upgrader"
+    branch_prefix: "upgrade_ruby_dependencies"
     message: "Upgrade ruby dependencies"
   bundle:
-    skip_changes: true
+    skip_changes: false # recommended false
+
+misc:
+  skip_version_check: false

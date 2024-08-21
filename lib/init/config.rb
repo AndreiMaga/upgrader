@@ -16,4 +16,8 @@ module Config
   def behaviours
     @behaviours ||= config.fetch(:behaviours, {})
   end
+
+  def misc
+    @misc ||= config.fetch(:misc, {})
+  end
 end
