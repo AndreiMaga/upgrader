@@ -20,7 +20,7 @@ module Upgrader
       private
 
       def change_version
-        raise 'Current Ruby version is the same as the selected version' if @current == @version
+        raise SkipFrame if @version == @current
 
         @manager.install_version(@version)
 
