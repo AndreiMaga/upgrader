@@ -19,7 +19,7 @@ module Upgrader
 
           def install_version(version)
             if version_already_installed(version)
-              puts 'Ruby version already installed'
+              puts "\nRuby version already installed\n\n"
               return
             end
 

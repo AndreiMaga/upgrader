@@ -18,11 +18,16 @@
   - [Bundle](#bundle)
     - [Steps](#steps-3)
       - [*`bundle:update`*](#bundleupdate)
+      - [*`bundle:install`*](#bundleinstall)
     - [Behaviours](#behaviours-2)
       - [*`skip_changes`*](#skip_changes)
   - [RSpec](#rspec)
     - [Steps](#steps-4)
       - [*`rspec`*](#rspec-1)
+  - [Ruby Version](#ruby-version)
+    - [Steps](#steps-5)
+      - [*`ruby-version`*](#ruby-version-1)
+    - [Files supported](#files-supported)
 
 
 
@@ -88,6 +93,9 @@ Will push the branch and will open a webpage to create the MR
 #### *`bundle:update`*
 Runs `bundle update` and can show you the differences in the lockfile.
 
+#### *`bundle:install`*
+Runs `bundle install`.
+
 ### Behaviours
 
 #### *`skip_changes`*
@@ -100,3 +108,18 @@ Set to true if you don't want to see the changes
 
 #### *`rspec`*
 Will run `rspec` and if it fails, it will stop the execution.
+
+## Ruby Version
+
+### Steps
+
+#### *`ruby-version`*
+Will prompt the user for a ruby version to update to, after that will install the version (if not already installed).  
+Once the version is installed, it will run the file handlers, these will go through the specified files and update the ruby version inside.
+
+### Files supported
+- Dockerfile
+- Gemfile
+- .gitlab-ci.yml
+- .rubocop.yml
+- .ruby-version

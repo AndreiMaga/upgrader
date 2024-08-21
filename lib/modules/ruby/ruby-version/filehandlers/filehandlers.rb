@@ -17,11 +17,11 @@ module Upgrader
         end
 
         def run_file_handlers(project, new_version)
-          puts 'Running file handlers'
+          puts "Running file handlers\n\n"
           file_handlers.each_value do |klass|
             klass.new(project, new_version).run
           end
-          puts 'File handlers finished'
+          puts "\nFile handlers finished"
         end
       end
     end
