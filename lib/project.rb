@@ -2,25 +2,37 @@
 
 module Upgrader
   class Project
-    attr_reader :name, :path
+    attr_reader :name, :path, :skip, :finished_steps
 
     def initialize(name:, opts:)
       @name = name
       @path = opts[:path]
+      @finished_steps = opts[:finished_steps] || []
       @steps = opts[:steps] || []
       @behaviour = opts[:behaviours] || {}
       @skip = opts[:skip] || false
+      ::Upgrader::Save.register_project(self)
     end
 
     def upgrade
-      raise 'No steps provided' if @steps.empty?
-
-      if @skip
-        puts 'Project is marked as skip'
+      if @skip || @steps.empty?
+        puts 'Project is marked as skip or no steps were provided'
         return
       end
 
-      @steps.each { |step| run_step(step) }
+      run_steps
+    end
+
+    def run_steps
+      @steps.each do |step|
+        if @finished_steps.include?(step)
+          puts "Skipping #{step} as it was already run"
+          next
+        end
+
+        run_step(step)
+        @finished_steps << step
+      end
     end
 
     def behaviours(mod, key)
