@@ -24,8 +24,12 @@
   - [RSpec](#rspec)
     - [Steps](#steps-4)
       - [*`rspec`*](#rspec-1)
-  - [Ruby Version](#ruby-version)
+  - [Rubocop](#rubocop)
     - [Steps](#steps-5)
+      - [*`rubocop`*](#rubocop-1)
+      - [*`rubocop:fix`*](#rubocopfix)
+  - [Ruby Version](#ruby-version)
+    - [Steps](#steps-6)
       - [*`ruby-version`*](#ruby-version-1)
     - [Files supported](#files-supported)
 
@@ -108,6 +112,17 @@ Set to true if you don't want to see the changes
 
 #### *`rspec`*
 Will run `rspec` and if it fails, it will stop the execution.
+
+
+## Rubocop
+
+### Steps
+
+#### *`rubocop`*
+Will run `rubocop` and if it finds any offenses, it will stop the execution.
+
+#### *`rubocop:fix`*
+Will run `rubocop -a` and will fail if the offenses corrected are not the same as offenses found. This happens when some offenses require -A to be fixed.
 
 ## Ruby Version
 

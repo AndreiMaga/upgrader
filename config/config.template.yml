@@ -12,3 +12,25 @@ projects:
   project_name:
     skip: false
     path: "some/path/to/your/project"
+    steps: ['git:create','changelog', 'ruby-version', 'bundle:update', 'rubocop:fix', 'rspec', 'git:commit', 'gitlab:mr']
+    behaviours:
+      changelog:
+        title: "Update ruby dependencies and ruby version"
+      ruby_version:
+        version: 3.3.6
+
+behaviours: # this will apply to all of the projects
+  changelog:
+    title: "Upgrade ruby dependencies"
+  git:
+    branch_prefix: "upgrade_ruby_dependencies"
+    message: "Upgrade ruby dependencies"
+  bundle:
+    skip_changes: false # recommended false
+
+misc:
+  skip_version_check: false
+
+languages:
+  ruby:
+    manager: "rbenv"
