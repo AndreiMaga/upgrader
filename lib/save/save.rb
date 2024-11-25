@@ -46,7 +46,8 @@ module Upgrader
     end
 
     def save!
-      build_projects = projects.reject! { |_, p| p.skip }.transform_values do |project|
+      clean_projects = projects.reject { |_, p| p.skip } || {}
+      build_projects = clean_projects.transform_values do |project|
         { finished_steps: project.finished_steps }
       end
 

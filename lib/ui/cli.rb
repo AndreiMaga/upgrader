@@ -4,12 +4,17 @@ module Upgrader
   module CLI
     class SkipFrame < StandardError; end
 
+    def graceful_exit
+      ::Upgrader::Save.save!
+      abort 'Exiting...'
+    end
+
     def wait(title, &block)
       @spin_group = ::CLI::UI::SpinGroup.new
       @spin_group.add(title, &block)
       @spin_group.wait
 
-      exit!(1) unless @spin_group.all_succeeded?
+      graceful_exit unless @spin_group.all_succeeded?
     end
 
     def frame_with_rescue(title, &block)
@@ -18,7 +23,7 @@ module Upgrader
       puts ::CLI::UI.fmt("{{yellow:#{title} - skipped}}")
     rescue StandardError => e
       puts ::CLI::UI.fmt("{{red:#{title} - #{e.message}}}")
-      exit!(1)
+      graceful_exit
     end
 
     def project_name

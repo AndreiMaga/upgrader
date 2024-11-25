@@ -16,16 +16,21 @@ module Upgrader
       load_save
 
       @projects.each do |name, opts|
-        opts = ::Upgrader::Save.build_opts(name, opts)
-
-        frame_with_rescue("Upgrading #{name}") do |_frame|
-          Project.new(name:, opts:).upgrade
-        end
+        run_project(name, opts)
       end
+    ensure
       save
     end
 
     private
+
+    def run_project(name, opts)
+      opts = ::Upgrader::Save.build_opts(name, opts)
+
+      frame_with_rescue("Upgrading #{name}") do |_frame|
+        Project.new(name:, opts:).upgrade
+      end
+    end
 
     def save
       ::Upgrader::Save.save!
@@ -60,4 +65,9 @@ module Upgrader
     end
   end
 end
-Upgrader::Upgrader.new.run
+
+begin
+  Upgrader::Upgrader.new.run
+ensure
+  ::Upgrader::Save.save!
+end
