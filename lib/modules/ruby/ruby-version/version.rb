@@ -14,6 +14,9 @@ module Upgrader
           pick_version
           confirm_change
           change_version
+          # this will run bundle install, since after doing a ruby version change
+          # the gems might need to be reinstalled
+          @project.run_step('bundle:install')
         end
       end
 

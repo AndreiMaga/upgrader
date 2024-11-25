@@ -32,8 +32,6 @@ module Upgrader
       result[key]
     end
 
-    private
-
     def run_step(step)
       mod, fn = step.split(':')
 
