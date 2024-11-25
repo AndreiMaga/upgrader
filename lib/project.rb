@@ -9,10 +9,16 @@ module Upgrader
       @path = opts[:path]
       @steps = opts[:steps] || []
       @behaviour = opts[:behaviours] || {}
+      @skip = opts[:skip] || false
     end
 
     def upgrade
       raise 'No steps provided' if @steps.empty?
+
+      if @skip
+        puts 'Project is marked as skip'
+        return
+      end
 
       @steps.each { |step| run_step(step) }
     end

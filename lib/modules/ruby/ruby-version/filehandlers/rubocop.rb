@@ -8,8 +8,11 @@ module Upgrader
           FILENAME = '.rubocop.yml'
           PATTERN = /TargetRubyVersion: (\d.\d)/
           GSUB_PATTERN = /(TargetRubyVersion: )(\d.\d)/
-          GSUB_REPLACE = "\\1#{@new_version}"
           SKIP_ON_MULTIPLE = false
+
+          def gsub_replace
+            "\\1#{@new_version}"
+          end
         end
       end
     end

@@ -56,7 +56,7 @@ module Upgrader
           end
 
           def gsub_replace
-            self.class::GSUB_REPLACE
+            self.class.gsub_replace
           end
 
           def filename

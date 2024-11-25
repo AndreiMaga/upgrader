@@ -22,7 +22,7 @@ module Upgrader
       def change_version
         raise SkipFrame if @version == @current
 
-        @manager.install_version(@version)
+        @manager.install_version(@version) unless @skip_checks
 
         # handle file changes
         ::Upgrader::Modules::Ruby::FileHandlers.run_file_handlers(@project, @version)
@@ -34,13 +34,17 @@ module Upgrader
       end
 
       def pick_version
+        if @project.behaviours(:ruby_version, :version)
+          @skip_checks = true
+          @version = @project.behaviours(:ruby_version, :version)
+          return
+        end
+
         manager_class = ::Upgrader::Modules::Ruby::Managers.manager
 
         @manager = manager_class.new(@project) if manager_class
 
-        list = ['custom']
-
-        list += @manager.list_of_versions if @manager
+        list = ['custom'] + (@manager.list_of_versions if @manager)
 
         @version = ::CLI::UI::Prompt.ask("Pick Ruby version (current: #{@current})", options: list)
 
@@ -55,6 +59,7 @@ module Upgrader
       end
 
       def confirm_change
+        return if @skip_checks
         return if ::CLI::UI::Prompt.confirm("Are you sure you want to change versions from #{@current} to #{@version}?")
 
         raise 'Cannot continue due to user input'

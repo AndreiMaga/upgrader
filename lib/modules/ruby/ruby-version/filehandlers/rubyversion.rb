@@ -8,8 +8,11 @@ module Upgrader
           FILENAME = '.ruby-version'
           PATTERN = /^ruby-(\d*.\d*.\d*)/
           GSUB_PATTERN = /(^ruby-)([\d.]{1,5})/
-          GSUB_REPLACE = "\\1#{@new_version}"
           SKIP_ON_MULTIPLE = true
+
+          def gsub_replace
+            "\\1#{@new_version}"
+          end
         end
       end
     end

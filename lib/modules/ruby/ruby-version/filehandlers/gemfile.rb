@@ -8,8 +8,11 @@ module Upgrader
           FILENAME = 'Gemfile'
           PATTERN = /^ruby ['"](\d*.\d*.\d*)['"]/
           GSUB_PATTERN = /(^ruby ['"])([\d.]{1,5})(['"])/
-          GSUB_REPLACE = "\\1#{@new_version}\\3"
           SKIP_ON_MULTIPLE = true
+
+          def gsub_replace
+            "\\1#{@new_version}\\3"
+          end
         end
       end
     end

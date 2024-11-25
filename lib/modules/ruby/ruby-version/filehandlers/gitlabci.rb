@@ -8,8 +8,11 @@ module Upgrader
           FILENAME = '.gitlab-ci.yml'
           PATTERN = /image: ruby:([\d.]{1,5})/
           GSUB_PATTERN = /(image: ruby:)([\d.]{1,5})/
-          GSUB_REPLACE = "\\1#{@new_version}"
           SKIP_ON_MULTIPLE = false
+
+          def gsub_replace
+            "\\1#{@new_version}"
+          end
         end
       end
     end
