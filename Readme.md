@@ -132,6 +132,8 @@ Will run `rubocop -a` and will fail if the offenses corrected are not the same a
 Will prompt the user for a ruby version to update to, after that will install the version (if not already installed).  
 Once the version is installed, it will run the file handlers, these will go through the specified files and update the ruby version inside.
 
+Adding `ruby-version` will automatically run `bundle:install` after it
+
 ### Files supported
 - Dockerfile
 - Gemfile
