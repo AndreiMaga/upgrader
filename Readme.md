@@ -42,7 +42,7 @@
 
 # Usage
 
-Check out `config/config.yml` for an example of how to setup projects and then just run
+Check out `config/config.template.yml` for an example of how to setup projects and then just run
 
 ```
 bundle exec ruby lib/upgrader.rb
