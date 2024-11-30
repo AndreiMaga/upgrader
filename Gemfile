@@ -2,10 +2,13 @@
 
 source 'https://rubygems.org'
 
-gem 'cli-ui', '~> 2.2'
+gem 'cli-ui'
 
-gem 'rubocop', '~> 1.65'
+gem 'git'
 
-gem 'git', '~> 2.1'
+gem 'launchy'
 
-gem 'launchy', '~> 3.0'
+group :development, :test do
+  gem 'rspec'
+  gem 'rubocop'
+end

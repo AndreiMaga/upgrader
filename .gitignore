@@ -1,4 +1,7 @@
 /config/**/*
 !/config/config.template.yml
+/spec/tmp/**/*
+!/spec/tmp/.keep
+
 
 /saves/**/*

@@ -6,8 +6,8 @@ module Upgrader
       module FileHandlers
         class RubyVersion < BaseFileHandler
           FILENAME = '.ruby-version'
-          PATTERN = /^ruby-(\d*.\d*.\d*)/
-          GSUB_PATTERN = /(^ruby-)([\d.]{1,5})/
+          PATTERN = /^(\d*.\d*.\d*)/
+          GSUB_PATTERN = /[\d.]{1,5}/
           SKIP_ON_MULTIPLE = true
 
           def gsub_replace
