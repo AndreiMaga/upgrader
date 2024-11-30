@@ -2,28 +2,32 @@
 
 module Upgrader
   module Modules
-    class RSpecModule < BaseModule
-      Upgrader::Modules.register_module('rspec', self)
+    module Ruby
+      class RSpecModule < BaseModule
+        Upgrader::Modules.register_module('rspec', self)
+        Upgrader::Modules.register_step('ruby', 'rspec', 'run',
+                                        'Will run `rspec` and if it fails, it will stop the execution.')
 
-      def run
-        frame_with_rescue('Running RSpec') do
-          wait('Running RSpec') { run_rspec }
+        def run
+          frame_with_rescue('Running RSpec') do
+            wait('Running RSpec') { run_rspec }
+          end
         end
-      end
 
-      private
+        private
 
-      def run_rspec
-        Bundler.with_original_env do
-          Dir.chdir(@project.path) do
-            output = `bundle exec rspec 2> /dev/null`
-            result = output[/(\d+) examples?, (\d+) failures?(, (\d+) pending)?/]
+        def run_rspec
+          Bundler.with_original_env do
+            Dir.chdir(@project.path) do
+              output = `bundle exec rspec 2> /dev/null`
+              result = output[/(\d+) examples?, (\d+) failures?(, (\d+) pending)?/]
 
-            raise 'Cannot get output from RSpec' unless result
+              raise 'Cannot get output from RSpec' unless result
 
-            _, failures, = result.split(',').map { |s| s[/\d+/].to_i }
+              _, failures, = result.split(',').map { |s| s[/\d+/].to_i }
 
-            raise "#{failures} example(s) failed" if failures.positive?
+              raise "#{failures} example(s) failed" if failures.positive?
+            end
           end
         end
       end

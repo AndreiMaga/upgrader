@@ -4,6 +4,8 @@ Style/Documentation:
 Lint/InheritException:
   Enabled: false
 
-
 Style/MutableConstant:
   Enabled: false
+
+Layout/LineLength:
+  Max: 200

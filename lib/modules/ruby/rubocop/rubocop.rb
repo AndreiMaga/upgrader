@@ -2,58 +2,64 @@
 
 module Upgrader
   module Modules
-    class RubocopModule < BaseModule
-      Upgrader::Modules.register_module('rubocop', self)
+    module Ruby
+      class RubocopModule < BaseModule
+        Upgrader::Modules.register_module('rubocop', self)
+        Upgrader::Modules.register_step('ruby', 'rubocop', 'run',
+                                        'Will run `rubocop` and if it finds any offenses, it will stop the execution.')
+        Upgrader::Modules.register_step('ruby', 'rubocop', 'fix',
+                                        'Will run `rubocop -a` and will fail if the offenses corrected are not the same as offenses found. This happens when some offenses require -A to be fixed.')
 
-      def run
-        frame_with_rescue('Running Rubocop') do
-          wait('Running Rubocop') { run_rubocop }
+        def run
+          frame_with_rescue('Running Rubocop') do
+            wait('Running Rubocop') { run_rubocop }
+          end
         end
-      end
 
-      def fix
-        frame_with_rescue('Running Rubocop -a') do
-          wait('Running Rubocop') { run_rubocop('-a') }
+        def fix
+          frame_with_rescue('Running Rubocop -a') do
+            wait('Running Rubocop') { run_rubocop('-a') }
+          end
         end
-      end
 
-      private
+        private
 
-      def setup_env(&block)
-        Bundler.with_original_env do
-          Dir.chdir(@project.path, &block)
+        def setup_env(&block)
+          Bundler.with_original_env do
+            Dir.chdir(@project.path, &block)
+          end
         end
-      end
 
-      def run_rubocop(opts = '')
-        setup_env { runner(opts) }
-      end
+        def run_rubocop(opts = '')
+          setup_env { runner(opts) }
+        end
 
-      def runner(opts = '')
-        output = `bundle exec rubocop #{opts} 2> /dev/null`
-        result = output[/(\d+) files inspected, (\d+) offenses detected, (\d+) offenses autocorrectable/]
+        def runner(opts = '')
+          output = `bundle exec rubocop #{opts} 2> /dev/null`
+          result = output[/(\d+) files inspected, (\d+) offenses detected, (\d+) offenses autocorrectable/]
 
-        return when_needs_correction(result) if result
+          return when_needs_correction(result) if result
 
-        result = output[/(\d+) files inspected, (\d+) offenses detected, (\d+) offenses corrected/]
+          result = output[/(\d+) files inspected, (\d+) offenses detected, (\d+) offenses corrected/]
 
-        return when_correcting(result) if result
+          return when_correcting(result) if result
 
-        result ||= output[/(\d+) files inspected, no offenses detected/]
+          result ||= output[/(\d+) files inspected, no offenses detected/]
 
-        raise 'Cannot get output from Rubocop' unless result
-      end
+          raise 'Cannot get output from Rubocop' unless result
+        end
 
-      def when_needs_correction(result)
-        _, offenses, = result.split(',').map { |s| s[/\d+/].to_i }
+        def when_needs_correction(result)
+          _, offenses, = result.split(',').map { |s| s[/\d+/].to_i }
 
-        raise "#{offenses} offenses detected" if offenses.positive?
-      end
+          raise "#{offenses} offenses detected" if offenses.positive?
+        end
 
-      def when_correcting(result)
-        _, offenses, corrected = result.split(',').map { |s| s[/\d+/].to_i }
+        def when_correcting(result)
+          _, offenses, corrected = result.split(',').map { |s| s[/\d+/].to_i }
 
-        raise "#{offenses} offenses detected" if offenses.positive? && offenses != corrected
+          raise "#{offenses} offenses detected" if offenses.positive? && offenses != corrected
+        end
       end
     end
   end
