@@ -24,10 +24,10 @@ end
 def handle_behaviours(type, modul)
   return unless Upgrader::Modules.behaviours.dig(type, modul)
 
-  @modules += "##### Behaviours\n\n"
+  @modules += "#### Behaviours\n\n"
 
   Upgrader::Modules.behaviours[type][modul].each do |behaviour, value|
-    @modules += "###### *`#{behaviour}`*\n\n"
+    @modules += "##### *`#{behaviour}`*\n\n"
     @modules += "#{value}\n\n"
   end
 end

@@ -5,14 +5,14 @@
     - [Changelog](#changelog)
       - [Steps](#steps)
         - [*`changelog`*](#changelog-1)
-        - [Behaviours](#behaviours)
-          - [*`title`*](#title)
+      - [Behaviours](#behaviours)
+        - [*`title`*](#title)
     - [Git](#git)
       - [Steps](#steps-1)
         - [*`git:create`*](#gitcreate)
         - [*`git:commit`*](#gitcommit)
-        - [Behaviours](#behaviours-1)
-          - [*`branch_name`*](#branch_name)
+      - [Behaviours](#behaviours-1)
+        - [*`branch_name`*](#branch_name)
     - [Gitlab](#gitlab)
       - [Steps](#steps-2)
         - [*`gitlab:mr`*](#gitlabmr)
@@ -21,8 +21,8 @@
       - [Steps](#steps-3)
         - [*`bundle:update`*](#bundleupdate)
         - [*`bundle:install`*](#bundleinstall)
-        - [Behaviours](#behaviours-2)
-          - [*`skip_changes`*](#skip_changes)
+      - [Behaviours](#behaviours-2)
+        - [*`skip_changes`*](#skip_changes)
     - [Rspec](#rspec)
       - [Steps](#steps-4)
         - [*`rspec`*](#rspec-1)
@@ -34,8 +34,8 @@
       - [Steps](#steps-6)
         - [*`ruby-version`*](#ruby-version-1)
         - [Files supported](#files-supported)
-        - [Behaviours](#behaviours-3)
-          - [*`version`*](#version)
+      - [Behaviours](#behaviours-3)
+        - [*`version`*](#version)
 
   
 # Concepts
@@ -62,9 +62,9 @@ bundle exec ruby lib/upgrader.rb
 
 Will add a changelog file to the `changelog/unreleased` folder, with the contents.
 
-##### Behaviours
+#### Behaviours
 
-###### *`title`*
+##### *`title`*
 
 The title of the changelog.
 
@@ -86,9 +86,9 @@ The title of the changelog.
 - commits
 
 
-##### Behaviours
+#### Behaviours
 
-###### *`branch_name`*
+##### *`branch_name`*
 
 The branch name is created like this `<timestamp>_<branch_prefix>`
 
@@ -114,9 +114,9 @@ Runs `bundle update` and can show you the differences in the lockfile.
 
 Runs `bundle install`.
 
-##### Behaviours
+#### Behaviours
 
-###### *`skip_changes`*
+##### *`skip_changes`*
 
 Set to true if you don't want to see the changes
 
@@ -159,9 +159,9 @@ Adding `ruby-version` will automatically run `bundle:install` after it
 - .ruby-version
 
 
-##### Behaviours
+#### Behaviours
 
-###### *`version`*
+##### *`version`*
 
 Setting the version will skip the prompt to input it.
 
