@@ -7,14 +7,18 @@ module Upgrader
     module Common
       class GitModule < BaseModule
         Upgrader::Modules.register_module('git', self)
-        Upgrader::Modules.register_step('common', 'git', 'create', '
-        - checkout main
-        - perform a hard reset
-        - clean the branch
-        - create a branch with a changelog')
-        Upgrader::Modules.register_step('common', 'git', 'commit', '
-        - adds all changes
-        - commits')
+        Upgrader::Modules.register_step('common', 'git', 'create', <<~GCRT
+          - checkout main
+          - perform a hard reset
+          - clean the branch
+          - create a branch with a changelog
+        GCRT
+        )
+        Upgrader::Modules.register_step('common', 'git', 'commit', <<~GCMT
+          - adds all changes
+          - commits
+        GCMT
+        )
         Upgrader::Modules.register_behaviour('common', 'git', 'branch_name',
                                              'The branch name is created like this `<timestamp>_<branch_prefix>`')
 

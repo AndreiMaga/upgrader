@@ -1,40 +1,43 @@
 - [Concepts](#concepts)
 - [Usage](#usage)
 - [Modules](#modules)
-  - [Git](#git)
-    - [Steps](#steps)
-      - [*`git:create`*](#gitcreate)
-      - [*`git:commit`*](#gitcommit)
-    - [Behaviours](#behaviours)
-      - [*`branch_prefix`*](#branch_prefix)
-  - [Changelog](#changelog)
-    - [Steps](#steps-1)
-      - [*`changelog`*](#changelog-1)
-    - [Behaviours](#behaviours-1)
-      - [*`title`*](#title)
-  - [Gitlab](#gitlab)
-    - [Steps](#steps-2)
-      - [*`gitlab:mr`*](#gitlabmr)
-  - [Bundle](#bundle)
-    - [Steps](#steps-3)
-      - [*`bundle:update`*](#bundleupdate)
-      - [*`bundle:install`*](#bundleinstall)
-    - [Behaviours](#behaviours-2)
-      - [*`skip_changes`*](#skip_changes)
-  - [RSpec](#rspec)
-    - [Steps](#steps-4)
-      - [*`rspec`*](#rspec-1)
-  - [Rubocop](#rubocop)
-    - [Steps](#steps-5)
-      - [*`rubocop`*](#rubocop-1)
-      - [*`rubocop:fix`*](#rubocopfix)
-  - [Ruby Version](#ruby-version)
-    - [Steps](#steps-6)
-      - [*`ruby-version`*](#ruby-version-1)
-    - [Files supported](#files-supported)
+  - [Common](#common)
+    - [Changelog](#changelog)
+      - [Steps](#steps)
+        - [*`changelog`*](#changelog-1)
+        - [Behaviours](#behaviours)
+          - [*`title`*](#title)
+    - [Git](#git)
+      - [Steps](#steps-1)
+        - [*`git:create`*](#gitcreate)
+        - [*`git:commit`*](#gitcommit)
+        - [Behaviours](#behaviours-1)
+          - [*`branch_name`*](#branch_name)
+    - [Gitlab](#gitlab)
+      - [Steps](#steps-2)
+        - [*`gitlab:mr`*](#gitlabmr)
+  - [Ruby](#ruby)
+    - [Bundle](#bundle)
+      - [Steps](#steps-3)
+        - [*`bundle:update`*](#bundleupdate)
+        - [*`bundle:install`*](#bundleinstall)
+        - [Behaviours](#behaviours-2)
+          - [*`skip_changes`*](#skip_changes)
+    - [Rspec](#rspec)
+      - [Steps](#steps-4)
+        - [*`rspec`*](#rspec-1)
+    - [Rubocop](#rubocop)
+      - [Steps](#steps-5)
+        - [*`rubocop`*](#rubocop-1)
+        - [*`rubocop:fix`*](#rubocopfix)
+    - [Ruby-version](#ruby-version)
+      - [Steps](#steps-6)
+        - [*`ruby-version`*](#ruby-version-1)
+        - [Files supported](#files-supported)
+        - [Behaviours](#behaviours-3)
+          - [*`version`*](#version)
 
-
-
+  
 # Concepts
 
 *Modules* are self contained pieces of code, they can be modified by behaviors and they expose 'steps'.  
@@ -49,94 +52,116 @@ bundle exec ruby lib/upgrader.rb
 ```
 
 # Modules
+## Common
 
-## Git
+### Changelog
 
-### Steps
+#### Steps
 
-#### *`git:create`*
+##### *`changelog`*
+
+Will add a changelog file to the `changelog/unreleased` folder, with the contents.
+
+##### Behaviours
+
+###### *`title`*
+
+The title of the changelog.
+
+### Git
+
+#### Steps
+
+##### *`git:create`*
+
 - checkout main
 - perform a hard reset
 - clean the branch
 - create a branch with a changelog
 
-#### *`git:commit`*
+
+##### *`git:commit`*
+
 - adds all changes
 - commits
 
-### Behaviours
 
-#### *`branch_prefix`*
+##### Behaviours
+
+###### *`branch_name`*
 
 The branch name is created like this `<timestamp>_<branch_prefix>`
 
-## Changelog
+### Gitlab
 
-### Steps
+#### Steps
 
-#### *`changelog`*
-Will add a changelog file to the `changelog/unreleased` folder, with the contents.
+##### *`gitlab:mr`*
 
+Will push the branch and will open a webpage to create the MR.
 
-### Behaviours
+## Ruby
 
-#### *`title`*
-Use this to change the changelog title
+### Bundle
 
-## Gitlab
+#### Steps
 
-### Steps
+##### *`bundle:update`*
 
-#### *`gitlab:mr`*
-Will push the branch and will open a webpage to create the MR
-
-## Bundle
-
-### Steps
-
-#### *`bundle:update`*
 Runs `bundle update` and can show you the differences in the lockfile.
 
-#### *`bundle:install`*
+##### *`bundle:install`*
+
 Runs `bundle install`.
 
-### Behaviours
+##### Behaviours
 
-#### *`skip_changes`*
+###### *`skip_changes`*
 
 Set to true if you don't want to see the changes
 
-## RSpec
+### Rspec
 
-### Steps
+#### Steps
 
-#### *`rspec`*
+##### *`rspec`*
+
 Will run `rspec` and if it fails, it will stop the execution.
 
+### Rubocop
 
-## Rubocop
+#### Steps
 
-### Steps
+##### *`rubocop`*
 
-#### *`rubocop`*
 Will run `rubocop` and if it finds any offenses, it will stop the execution.
 
-#### *`rubocop:fix`*
+##### *`rubocop:fix`*
+
 Will run `rubocop -a` and will fail if the offenses corrected are not the same as offenses found. This happens when some offenses require -A to be fixed.
 
-## Ruby Version
+### Ruby-version
 
-### Steps
+#### Steps
 
-#### *`ruby-version`*
-Will prompt the user for a ruby version to update to, after that will install the version (if not already installed).  
+##### *`ruby-version`*
+
+Will prompt the user for a ruby version to update to, after that will install the version (if not already installed).
 Once the version is installed, it will run the file handlers, these will go through the specified files and update the ruby version inside.
 
 Adding `ruby-version` will automatically run `bundle:install` after it
 
-### Files supported
+##### Files supported
 - Dockerfile
 - Gemfile
 - .gitlab-ci.yml
 - .rubocop.yml
 - .ruby-version
+
+
+##### Behaviours
+
+###### *`version`*
+
+Setting the version will skip the prompt to input it.
+
