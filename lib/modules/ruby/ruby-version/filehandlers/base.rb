@@ -7,6 +7,7 @@ module Upgrader
     module Ruby
       module FileHandlers
         class BaseFileHandler
+          AUTO_REGISTER = true
           include CLI
 
           def initialize(project, new_version)
@@ -27,7 +28,7 @@ module Upgrader
           end
 
           def self.inherited(klass) # rubocop:disable Lint/MissingSuper
-            ::Upgrader::Modules::Ruby::FileHandlers.register_file_handler(klass.to_s, klass)
+            ::Upgrader::Modules::Ruby::FileHandlers.register_file_handler(klass.to_s, klass) if klass::AUTO_REGISTER
           end
 
           private

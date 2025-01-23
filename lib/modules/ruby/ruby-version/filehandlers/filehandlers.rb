@@ -23,6 +23,10 @@ module Upgrader
           end
           puts "\nFile handlers finished"
         end
+
+        def clear_file_handlers
+          @file_handlers = {}
+        end
       end
     end
   end
