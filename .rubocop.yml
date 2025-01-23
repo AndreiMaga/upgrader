@@ -9,3 +9,6 @@ Style/MutableConstant:
 
 Layout/LineLength:
   Max: 200
+
+Metrics/BlockLength:
+  Enabled: false
