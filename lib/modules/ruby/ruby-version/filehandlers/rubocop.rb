@@ -6,8 +6,8 @@ module Upgrader
       module FileHandlers
         class Rubocop < BaseFileHandler
           FILENAME = '.rubocop.yml'
-          PATTERN = /TargetRubyVersion: (\d.\d)/
-          GSUB_PATTERN = /(TargetRubyVersion: )(\d.\d)/
+          PATTERN = /TargetRubyVersion: (\d\.\d\.\d)/
+          GSUB_PATTERN = /(TargetRubyVersion: )(\d\.\d\.\d)/
           SKIP_ON_MULTIPLE = false
 
           def gsub_replace

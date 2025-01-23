@@ -17,7 +17,7 @@ module Upgrader
         private
 
         def run_rspec
-          Bundler.with_original_env do
+          Bundler.with_unbundled_env do
             Dir.chdir(@project.path) do
               output = `bundle exec rspec 2> /dev/null`
               result = output[/(\d+) examples?, (\d+) failures?(, (\d+) pending)?/]

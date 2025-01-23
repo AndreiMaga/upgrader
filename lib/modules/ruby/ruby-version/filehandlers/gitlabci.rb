@@ -6,8 +6,8 @@ module Upgrader
       module FileHandlers
         class GitlabCI < BaseFileHandler
           FILENAME = '.gitlab-ci.yml'
-          PATTERN = /image: ruby:([\d.]{1,5})/
-          GSUB_PATTERN = /(image: ruby:)([\d.]{1,5})/
+          PATTERN = /(image: .*ruby:)([\d.]{1,5})/
+          GSUB_PATTERN = /(image: .*ruby:)([\d.]{1,5})/
           SKIP_ON_MULTIPLE = false
 
           def gsub_replace

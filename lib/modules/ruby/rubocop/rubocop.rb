@@ -25,7 +25,7 @@ module Upgrader
         private
 
         def setup_env(&block)
-          Bundler.with_original_env do
+          Bundler.with_unbundled_env do
             Dir.chdir(@project.path, &block)
           end
         end
