@@ -66,6 +66,15 @@ module Upgrader
   end
 end
 
+options = {}
+
+OptionParser.new do |opt|
+  opt.on('--no-save', 'Do not save the progress') { options[:no_save] = true }
+  opt.on('--no-frame', 'Do not show frames') { options[:no_frame] = true }
+end.parse!
+
+Config.options = options
+
 begin
   Upgrader::Upgrader.new.run
 ensure

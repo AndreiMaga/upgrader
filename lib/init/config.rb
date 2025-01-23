@@ -24,4 +24,12 @@ module Config
   def languages
     @languages ||= config.fetch(:languages, {})
   end
+
+  def options=(value)
+    @options ||= value
+  end
+
+  def options
+    @options ||= {}
+  end
 end

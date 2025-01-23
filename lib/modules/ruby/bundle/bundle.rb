@@ -30,7 +30,7 @@ module Upgrader
         private
 
         def install_gems
-          Bundler.with_unbundled_env do
+          Bundler.with_original_env do
             Dir.chdir(@project.path) { `bundle install` }
           end
         end
@@ -40,7 +40,7 @@ module Upgrader
         end
 
         def update_gems
-          Bundler.with_unbundled_env do
+          Bundler.with_original_env do
             Dir.chdir(@project.path) { `bundle update` }
           end
         end

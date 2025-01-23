@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'optparse'
 require 'cli/ui'
 
 CLI::UI::StdoutRouter.enable

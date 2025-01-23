@@ -17,7 +17,7 @@ module Upgrader
     end
 
     def build_opts(name, opts)
-      return @config[name]&.merge(opts) if @config.key?(name)
+      return @config[name]&.merge(opts) if @config&.key?(name)
 
       opts
     end
@@ -42,10 +42,14 @@ module Upgrader
     end
 
     def load!
+      return if Config.options[:no_save]
+
       config
     end
 
     def save!
+      return if Config.options[:no_save]
+
       clean_projects = projects.reject { |_, p| p.skip } || {}
       build_projects = clean_projects.transform_values do |project|
         { finished_steps: project.finished_steps }

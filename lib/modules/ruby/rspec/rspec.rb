@@ -17,7 +17,7 @@ module Upgrader
         private
 
         def run_rspec
-          Bundler.with_unbundled_env do
+          Bundler.with_original_env do
             Dir.chdir(@project.path) do
               output = `bundle exec rspec 2> /dev/null`
               result = output[/(\d+) examples?, (\d+) failures?(, (\d+) pending)?/]
@@ -27,6 +27,7 @@ module Upgrader
               _, failures, = result.split(',').map { |s| s[/\d+/].to_i }
 
               raise "#{failures} example(s) failed" if failures.positive?
+              raise "RSpec failed with output: #{output}" unless $CHILD_STATUS.success?
             end
           end
         end

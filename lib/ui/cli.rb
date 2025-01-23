@@ -10,6 +10,11 @@ module Upgrader
     end
 
     def wait(title, &block)
+      if Config.options[:no_frame]
+        puts title
+        return block.call
+      end
+
       @spin_group = ::CLI::UI::SpinGroup.new
       @spin_group.add(title, &block)
       @spin_group.wait
@@ -18,6 +23,11 @@ module Upgrader
     end
 
     def frame_with_rescue(title, &block)
+      if Config.options[:no_frame]
+        puts ::CLI::UI.fmt("#{title} #{project_name}")
+        return block.call
+      end
+
       ::CLI::UI::Frame.open("#{title} #{project_name}", &block)
     rescue SkipFrame
       puts ::CLI::UI.fmt("{{yellow:#{title} - skipped}}")
