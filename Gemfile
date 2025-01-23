@@ -9,4 +9,5 @@ gem 'git'
 group :development, :test do
   gem 'rspec'
   gem 'rubocop'
+  gem 'simplecov'
 end
