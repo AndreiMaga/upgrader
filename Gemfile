@@ -6,8 +6,6 @@ gem 'cli-ui'
 
 gem 'git'
 
-gem 'launchy'
-
 group :development, :test do
   gem 'rspec'
   gem 'rubocop'

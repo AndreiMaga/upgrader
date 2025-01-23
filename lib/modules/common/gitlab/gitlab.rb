@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'git'
-require 'launchy'
 
 module Upgrader
   module Modules
@@ -31,7 +30,7 @@ module Upgrader
         end
 
         def create_merge_request
-          Launchy.open(url)
+          `open #{url}`
         end
 
         def url
