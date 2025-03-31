@@ -23,12 +23,24 @@ module Upgrader
               return
             end
 
-            Dir.chdir(@project.path) { system("rbenv install #{version}") }
+            Dir.chdir(@project.path) { `rbenv install #{version}` }
           end
 
           def version_already_installed(version)
             output = Dir.chdir(@project.path) { `rbenv versions`.split("\n").map { |v| v.split(' ')[0] } }
             output.include?(version)
+          end
+
+          def rb_vn
+            File.readlines(File.join(@project.path, '.ruby-version'), 'r').first.strip
+          end
+
+          def run_command(command)
+            Dir.chdir(@project.path) do
+              Bundler.with_original_env do
+                return `eval \"$(rbenv init - --no-rehash bash)\" && RBENV_VERSION=#{rb_vn} #{command}`
+              end
+            end
           end
         end
       end

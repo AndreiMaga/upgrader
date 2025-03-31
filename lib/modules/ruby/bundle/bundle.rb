@@ -30,9 +30,7 @@ module Upgrader
         private
 
         def install_gems
-          Bundler.with_original_env do
-            Dir.chdir(@project.path) { `bundle install` }
-          end
+          Managers.manager.new(@project).run_command('bundle install')
         end
 
         def changes
@@ -40,9 +38,7 @@ module Upgrader
         end
 
         def update_gems
-          Bundler.with_original_env do
-            Dir.chdir(@project.path) { `bundle update` }
-          end
+          Managers.manager.new(@project).run_command('bundle update')
         end
 
         def store_gems(key)

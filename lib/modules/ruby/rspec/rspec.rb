@@ -19,7 +19,7 @@ module Upgrader
         def run_rspec
           Bundler.with_original_env do
             Dir.chdir(@project.path) do
-              output = `bundle exec rspec 2> /dev/null`
+              output = Managers.manager.new(@project).run_command('bundle exec rspec 2> /dev/null')
               result = output[/(\d+) examples?, (\d+) failures?(, (\d+) pending)?/]
 
               raise 'Cannot get output from RSpec' unless result

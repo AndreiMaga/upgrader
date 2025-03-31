@@ -35,7 +35,7 @@ module Upgrader
         end
 
         def runner(opts = '')
-          output = `bundle exec rubocop #{opts} 2> /dev/null`
+          output = Managers.manager.new(@project).run_command("bundle exec rubocop #{opts} 2> /dev/null")
           result = output[/(\d+) files inspected, (\d+) offenses detected, (\d+) offenses autocorrectable/]
 
           return when_needs_correction(result) if result
@@ -43,6 +43,10 @@ module Upgrader
           result = output[/(\d+) files inspected, (\d+) offenses detected, (\d+) offenses corrected/]
 
           return when_correcting(result) if result
+
+          result = output[/(\d+) files inspected, (\d+) offenses detected/]
+
+          return when_needs_correction(result) if result
 
           result ||= output[/(\d+) files inspected, no offenses detected/]
 

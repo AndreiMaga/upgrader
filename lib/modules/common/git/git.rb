@@ -43,7 +43,7 @@ module Upgrader
 
         def commit_all
           git.add(all: true)
-          git.commit(@project.behaviours(:git, :message))
+          git.commit(@project.behaviours(:git, :message), { no_verify: true })
         end
 
         def checkout_main
