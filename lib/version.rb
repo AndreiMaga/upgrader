@@ -23,6 +23,8 @@ module Upgrader
         response = Net::HTTP.get(uri)
 
         response&.to_s&.strip
+      rescue StandardError
+        current
       end
 
       def current
