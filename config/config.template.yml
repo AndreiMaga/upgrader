@@ -22,6 +22,7 @@ projects:
 behaviours: # this will apply to all of the projects
   changelog:
     title: "Upgrade ruby dependencies"
+    ai_title: true
   git:
     branch_prefix: "upgrade_ruby_dependencies"
     message: "Upgrade ruby dependencies"
