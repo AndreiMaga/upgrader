@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'git'
+require 'shellwords'
 
 module Upgrader
   module Modules
@@ -8,10 +9,13 @@ module Upgrader
       class GitLabModule < BaseModule
         Upgrader::Modules.register_module('gitlab', self)
         Upgrader::Modules.register_step('common', 'gitlab', 'mr',
-                                        'Will push the branch and will open a webpage to create the MR.')
+                                        'Will push the branch and create the MR using the glab CLI.')
+        Upgrader::Modules.register_behaviour('common', 'gitlab', 'ai_summary',
+                                             'Set to true to generate an AI-powered MR description from the gem diff.')
 
         def mr
           frame_with_rescue('Creating merge request') do
+            generate_summary if @project.behaviours(:gitlab, :ai_summary)
             wait('Pushing branch') { push_branch }
             wait('Creating merge request') { create_merge_request }
           end
@@ -29,13 +33,48 @@ module Upgrader
           git.push('origin', branch_name)
         end
 
-        def create_merge_request
-          `open #{url}`
+        def generate_summary
+          return if @project.store[:mr_summary]
+
+          gem_diff = @project.store[:gem_diff]
+          return unless gem_diff&.any?
+
+          result = nil
+          wait('Generating MR summary') { result = Ai::Adapters.adapter.new.ask(summary_prompt(gem_diff)) }
+          @project.store[:mr_summary] = result.strip
         end
 
-        def url
-          repo = git.remote.url.match(/git@(.+):(.+).git/)[2]
-          "https://gitlab.com/#{repo}/-/merge_requests/new?merge_request%5Bsource_branch%5D=#{branch_name}"
+        def summary_prompt(gem_diff)
+          changes = gem_diff.map { |name, v| "#{name}: #{v[:before] || 'new'} -> #{v[:after] || 'removed'}" }
+
+          <<~PROMPT
+            Generate a concise GitLab MR description for a Ruby dependency upgrade in markdown.
+            Include a brief summary, notable gem changes (skip patch-only updates), and any security fixes.
+            Do not include a title, only the body.
+
+            Gem changes:
+            #{changes.join("\n")}
+          PROMPT
+        end
+
+        def create_merge_request
+          cmd = build_mr_command
+          output = Dir.chdir(@project.path) { `#{cmd.shelljoin} 2>&1` }
+          raise "Failed to create merge request:\n#{output}" unless Process.last_status.success?
+
+          ::CLI::UI.puts ''
+          output.each_line { |line| ::CLI::UI.puts line.chomp }
+        end
+
+        def build_mr_command
+          cmd = ['glab', 'mr', 'create',
+                 '--source-branch', branch_name,
+                 '--title', @project.behaviours(:git, :message),
+                 '--remove-source-branch']
+
+          summary = @project.store[:mr_summary]
+          cmd.push('--description', summary) if summary
+          cmd
         end
       end
     end

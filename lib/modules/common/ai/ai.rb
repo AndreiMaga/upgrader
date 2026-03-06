@@ -28,10 +28,6 @@ module Upgrader
         end
 
         def build_prompt(gem_diff)
-          changes = gem_diff.map do |name, values|
-            "#{name}: #{values[:before] || 'new'} -> #{values[:after] || 'removed'}"
-          end.join("\n")
-
           <<~PROMPT
             The following Ruby gems were changed after a `bundle update`. For each gem that had a major or minor version bump, list any breaking changes, deprecations, or important migration notes.
 
@@ -39,8 +35,14 @@ module Upgrader
             Be concise. Group by gem name. If there are no notable changes for a gem, skip it entirely.
 
             Gem changes:
-            #{changes}
+            #{gem_changes(gem_diff)}
           PROMPT
+        end
+
+        def gem_changes(gem_diff)
+          gem_diff.map do |name, values|
+            "#{name}: #{values[:before] || 'new'} -> #{values[:after] || 'removed'}"
+          end.join("\n")
         end
 
         def display(result)

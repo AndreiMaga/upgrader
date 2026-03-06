@@ -13,7 +13,7 @@ module Upgrader
 
             def ask(prompt)
               escaped_prompt = prompt.gsub("'", "'\\''")
-              `claude -p '#{escaped_prompt}' --model #{@model} 2>&1`
+              `claude -p '#{escaped_prompt}' --model #{@model} --allowed-tools WebSearch 2>&1`
             end
           end
         end

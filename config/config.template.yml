@@ -27,6 +27,8 @@ behaviours: # this will apply to all of the projects
     message: "Upgrade ruby dependencies"
   bundle:
     skip_changes: false # recommended false
+  gitlab:
+    ai_summary: true
 
 misc:
   skip_version_check: false
