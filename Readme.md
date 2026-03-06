@@ -2,42 +2,45 @@
 - [Usage](#usage)
 - [Modules](#modules)
   - [Common](#common)
-    - [Changelog](#changelog)
+    - [Ai](#ai)
       - [Steps](#steps)
+        - [*`ai:changes`*](#aichanges)
+    - [Changelog](#changelog)
+      - [Steps](#steps-1)
         - [*`changelog`*](#changelog-1)
       - [Behaviours](#behaviours)
         - [*`title`*](#title)
     - [Git](#git)
-      - [Steps](#steps-1)
+      - [Steps](#steps-2)
         - [*`git:create`*](#gitcreate)
         - [*`git:commit`*](#gitcommit)
       - [Behaviours](#behaviours-1)
         - [*`branch_name`*](#branch_name)
     - [Gitlab](#gitlab)
-      - [Steps](#steps-2)
+      - [Steps](#steps-3)
         - [*`gitlab:mr`*](#gitlabmr)
   - [Ruby](#ruby)
     - [Bundle](#bundle)
-      - [Steps](#steps-3)
+      - [Steps](#steps-4)
         - [*`bundle:update`*](#bundleupdate)
         - [*`bundle:install`*](#bundleinstall)
       - [Behaviours](#behaviours-2)
         - [*`skip_changes`*](#skip_changes)
     - [Rspec](#rspec)
-      - [Steps](#steps-4)
+      - [Steps](#steps-5)
         - [*`rspec`*](#rspec-1)
     - [Rubocop](#rubocop)
-      - [Steps](#steps-5)
+      - [Steps](#steps-6)
         - [*`rubocop`*](#rubocop-1)
         - [*`rubocop:fix`*](#rubocopfix)
     - [Ruby-version](#ruby-version)
-      - [Steps](#steps-6)
+      - [Steps](#steps-7)
         - [*`ruby-version`*](#ruby-version-1)
         - [Files supported](#files-supported)
       - [Behaviours](#behaviours-3)
         - [*`version`*](#version)
 
-  
+
 # Concepts
 
 *Modules* are self contained pieces of code, they can be modified by behaviors and they expose 'steps'.  
@@ -53,6 +56,14 @@ bundle exec ruby lib/upgrader.rb
 
 # Modules
 ## Common
+
+### Ai
+
+#### Steps
+
+##### *`ai:changes`*
+
+Analyses gem version changes using an AI adapter and reports breaking changes.
 
 ### Changelog
 

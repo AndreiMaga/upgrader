@@ -2,7 +2,7 @@
 
 module Upgrader
   class Project
-    attr_reader :name, :path, :skip, :finished_steps
+    attr_reader :name, :path, :skip, :finished_steps, :store
 
     def initialize(name:, opts:)
       @name = name
@@ -11,6 +11,7 @@ module Upgrader
       @steps = opts[:steps] || []
       @behaviour = opts[:behaviours] || {}
       @skip = opts[:skip] || false
+      @store = opts[:store] || {}
       ::Upgrader::Save.register_project(self)
     end
 

@@ -17,7 +17,8 @@ module Upgrader
             store_gems(:before)
             wait('Updating gems') { update_gems }
             store_gems(:after)
-            changes if @project.behaviours(:bundle, :skip_changes) == false
+            @project.store[:gem_diff] = HashDiff.new(gems[:before], gems[:after]).diff
+            show_changes if @project.behaviours(:bundle, :skip_changes) == false
           end
         end
 
@@ -31,10 +32,6 @@ module Upgrader
 
         def install_gems
           Managers.manager.new(@project).run_command('bundle install')
-        end
-
-        def changes
-          show_changes if ::CLI::UI::Prompt.confirm('Show changes?')
         end
 
         def update_gems
@@ -59,7 +56,10 @@ module Upgrader
         end
 
         def show_changes
-          HashDiff.new(gems[:before], gems[:after]).print
+          ::CLI::UI.puts ''
+          @project.store[:gem_diff].each do |key, values|
+            ::CLI::UI.puts ::CLI::UI.fmt "#{values[:changes]} #{key}: #{values[:before]} -> #{values[:after]}"
+          end
 
           exit!(1) unless ::CLI::UI::Prompt.confirm('Continue?')
         end
@@ -80,13 +80,6 @@ module Upgrader
             '{{red:-}}'
           else
             '{{yellow:~}}'
-          end
-        end
-
-        def print
-          ::CLI::UI.puts ''
-          diff.each do |key, values|
-            ::CLI::UI.puts ::CLI::UI.fmt "#{values[:changes]} #{key}: #{values[:before]} -> #{values[:after]}"
           end
         end
 

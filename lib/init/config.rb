@@ -25,6 +25,10 @@ module Config
     @languages ||= config.fetch(:languages, {})
   end
 
+  def ai
+    @ai ||= config.fetch(:ai) { raise 'No ai configuration found in config.yml' }
+  end
+
   def options=(value)
     @options ||= value
   end

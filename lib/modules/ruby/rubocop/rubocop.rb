@@ -44,7 +44,7 @@ module Upgrader
 
           return when_correcting(result) if result
 
-          result = output[/(\d+) files inspected, (\d+) offenses detected/]
+          result = output[/(\d+) files inspected, (\d+) offense(s)? detected/]
 
           return when_needs_correction(result) if result
 

@@ -52,7 +52,7 @@ module Upgrader
 
       clean_projects = projects.reject { |_, p| p.skip } || {}
       build_projects = clean_projects.transform_values do |project|
-        { finished_steps: project.finished_steps }
+        { finished_steps: project.finished_steps, store: project.store }
       end
 
       File.open(save_file, 'w') do |file|
