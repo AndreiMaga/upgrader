@@ -24,16 +24,18 @@ module Upgrader
         private
 
         def adapter
-          Ai::Adapters.adapter.new
+          Ai::Adapters.adapter.new(project_path: @project.path)
         end
 
         def build_prompt(gem_diff)
+          ruby_version = @project.store[:ruby_version]
+
           <<~PROMPT
             The following Ruby gems were changed after a `bundle update`. For each gem that had a major or minor version bump, list any breaking changes, deprecations, or important migration notes.
 
             Skip gems that only had patch-level updates unless they contain known security fixes.
             Be concise. Group by gem name. If there are no notable changes for a gem, skip it entirely.
-
+            #{ruby_version ? "\nRuby version: #{ruby_version[:from]} -> #{ruby_version[:to]}" : ''}
             Gem changes:
             #{gem_changes(gem_diff)}
           PROMPT

@@ -42,6 +42,8 @@ module Upgrader
         def change_version
           raise SkipFrame if @version == @current
 
+          @project.store[:ruby_version] = { from: @current, to: @version.to_s }
+
           @manager.install_version(@version) unless @skip_checks
 
           # handle file changes

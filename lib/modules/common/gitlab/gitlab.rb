@@ -40,18 +40,19 @@ module Upgrader
           return unless gem_diff&.any?
 
           result = nil
-          wait('Generating MR summary') { result = Ai::Adapters.adapter.new.ask(summary_prompt(gem_diff)) }
+          wait('Generating MR summary') { result = Ai::Adapters.adapter.new(project_path: @project.path).ask(summary_prompt(gem_diff)) }
           @project.store[:mr_summary] = result.strip
         end
 
         def summary_prompt(gem_diff)
           changes = gem_diff.map { |name, v| "#{name}: #{v[:before] || 'new'} -> #{v[:after] || 'removed'}" }
+          ruby_version = @project.store[:ruby_version]
 
           <<~PROMPT
             Generate a concise GitLab MR description for a Ruby dependency upgrade in markdown.
             Include a brief summary, notable gem changes (skip patch-only updates), and any security fixes.
             Do not include a title, only the body.
-
+            #{ruby_version ? "\nRuby version: #{ruby_version[:from]} -> #{ruby_version[:to]}" : ''}
             Gem changes:
             #{changes.join("\n")}
           PROMPT
