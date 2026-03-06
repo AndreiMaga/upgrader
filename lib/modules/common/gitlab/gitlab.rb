@@ -59,6 +59,8 @@ module Upgrader
         end
 
         def create_merge_request
+          raise 'glab CLI not found. Install it from https://gitlab.com/gitlab-org/cli' unless system('which glab > /dev/null 2>&1')
+
           cmd = build_mr_command
           output = Dir.chdir(@project.path) { `#{cmd.shelljoin} 2>&1` }
           raise "Failed to create merge request:\n#{output}" unless Process.last_status.success?

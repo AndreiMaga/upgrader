@@ -9,6 +9,8 @@ module Upgrader
         Upgrader::Modules.register_step('ruby', 'bundle', 'update',
                                         'Runs `bundle update` and can show you the differences in the lockfile.')
         Upgrader::Modules.register_step('ruby', 'bundle', 'install', 'Runs `bundle install`.')
+        Upgrader::Modules.register_step('ruby', 'bundle', 'audit',
+                                        'Runs `bundle audit` and stops if vulnerabilities are found.')
         Upgrader::Modules.register_behaviour('ruby', 'bundle', 'skip_changes',
                                              'Set to true if you don\'t want to see the changes')
 
@@ -28,7 +30,20 @@ module Upgrader
           end
         end
 
+        def audit
+          frame_with_rescue('bundle audit') do
+            wait('Auditing gems') { audit_gems }
+          end
+        end
+
         private
+
+        def audit_gems
+          output = Managers.manager.new(@project).run_command('bundle audit check --update')
+          return if output.include?('No vulnerabilities found')
+
+          raise "Vulnerabilities found:\n#{output}"
+        end
 
         def install_gems
           Managers.manager.new(@project).run_command('bundle install')

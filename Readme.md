@@ -19,12 +19,15 @@
     - [Gitlab](#gitlab)
       - [Steps](#steps-3)
         - [*`gitlab:mr`*](#gitlabmr)
+      - [Behaviours](#behaviours-2)
+        - [*`ai_summary`*](#ai_summary)
   - [Ruby](#ruby)
     - [Bundle](#bundle)
       - [Steps](#steps-4)
         - [*`bundle:update`*](#bundleupdate)
         - [*`bundle:install`*](#bundleinstall)
-      - [Behaviours](#behaviours-2)
+        - [*`bundle:audit`*](#bundleaudit)
+      - [Behaviours](#behaviours-3)
         - [*`skip_changes`*](#skip_changes)
     - [Rspec](#rspec)
       - [Steps](#steps-5)
@@ -37,10 +40,9 @@
       - [Steps](#steps-7)
         - [*`ruby-version`*](#ruby-version-1)
         - [Files supported](#files-supported)
-      - [Behaviours](#behaviours-3)
+      - [Behaviours](#behaviours-4)
         - [*`version`*](#version)
-
-
+  
 # Concepts
 
 *Modules* are self contained pieces of code, they can be modified by behaviors and they expose 'steps'.  
@@ -109,7 +111,13 @@ The branch name is created like this `<timestamp>_<branch_prefix>`
 
 ##### *`gitlab:mr`*
 
-Will push the branch and will open a webpage to create the MR.
+Will push the branch and create the MR using the glab CLI.
+
+#### Behaviours
+
+##### *`ai_summary`*
+
+Set to true to generate an AI-powered MR description from the gem diff.
 
 ## Ruby
 
@@ -124,6 +132,10 @@ Runs `bundle update` and can show you the differences in the lockfile.
 ##### *`bundle:install`*
 
 Runs `bundle install`.
+
+##### *`bundle:audit`*
+
+Runs `bundle audit` and stops if vulnerabilities are found.
 
 #### Behaviours
 

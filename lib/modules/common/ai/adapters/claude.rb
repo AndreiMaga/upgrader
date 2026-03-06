@@ -10,6 +10,7 @@ module Upgrader
               @model = model || ::Config.ai[:model]
               @project_path = project_path
               raise 'No model configured for ai adapter. Set ai.model in config.yml' unless @model
+              raise 'claude CLI not found. Install it from https://claude.ai/download' unless system('which claude > /dev/null 2>&1')
             end
 
             def ask(prompt)
